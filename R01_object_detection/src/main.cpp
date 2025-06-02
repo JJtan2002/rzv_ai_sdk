@@ -1338,9 +1338,8 @@ int32_t main(int32_t argc, char * argv[])
         /*If different, set padding on Wayland display*/
         display_padding = true;
     }
-
     #ifdef V2H
-    /*Disable OpenCV Accelerator due to the use of multithreading */
+    //Disable OpenCV Accelerator due to the use of multithreading
     unsigned long OCA_list[16];
     for (int i=0; i < 16; i++) OCA_list[i] = 0;
     OCA_Activate( &OCA_list[0] );
@@ -1350,9 +1349,9 @@ int32_t main(int32_t argc, char * argv[])
     std::string media_port = query_device_status("RZG2L_CRU");
     /* MIPI Camera Setup */
     mipi_cam_init();
+    std::string device = "/dev/video0"; // Or your USB camera's device path
     #endif
     gstreamer_pipeline = "v4l2src device=" + media_port +" io-mode=dmabuf ! video/x-raw, width="+std::to_string(CAM_IMAGE_WIDTH)+", height="+std::to_string(CAM_IMAGE_HEIGHT)+" ,framerate=30/1 ! videoconvert ! appsink -v";
-
     printf("RZ/V AI SDK Sample Application\n");
     printf("Model : Darknet YOLOv3 | %s\n", model_dir.c_str());
     printf("Input : %s\n", INPUT_CAM_NAME);
